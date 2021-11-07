@@ -1,7 +1,7 @@
 package com.productsapp;
 
-import com.facebook.react.ReactActivity;
 import android.os.Bundle;
+import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {
 
@@ -15,7 +15,7 @@ public class MainActivity extends ReactActivity {
   }
 
   @Override
-protected void onCreate(Bundle savedInstanceState) {
-  super.onCreate(null);
-}
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(null);
+  }
 }

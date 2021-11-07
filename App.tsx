@@ -8,7 +8,7 @@ const AppProvider = ({ children }: IChildrenAsProps) => {
   return <>{children}</>;
 };
 
-export const App = () => {
+const App = () => {
   return (
     <NavigationContainer>
       <AppProvider>
@@ -17,3 +17,5 @@ export const App = () => {
     </NavigationContainer>
   );
 };
+
+export default App;
