@@ -7,16 +7,22 @@ import SignUpScreen from '../screens/SignUpScreen';
 export type RootStackParams = {
   HomeScreen: undefined;
   LogInScreen: undefined;
-  SigUpScreen: undefined;
+  SignUpScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParams>();
 
 export const StackNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyle: {
+          backgroundColor: 'white',
+        },
+      }}>
       <Stack.Screen name="LogInScreen" component={LogInScreen} />
-      <Stack.Screen name="SigUpScreen" component={SignUpScreen} />
+      <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
     </Stack.Navigator>
   );
