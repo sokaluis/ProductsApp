@@ -78,7 +78,12 @@ export const AuthProvider = ({ children }: IChildrenAsProps) => {
       type: 'REMOVE_ERROR',
     });
   };
-  const logOut = () => {};
+  const logOut = async () => {
+    await AsyncStorage.removeItem('token');
+    dispatch({
+      type: 'LOG_OUT',
+    });
+  };
 
   return (
     <AuthContext.Provider
