@@ -20,6 +20,11 @@ export interface LoginData {
   correo: string;
   password: string;
 }
+export interface RegisterData {
+  nombre: string;
+  correo: string;
+  password: string;
+}
 
 // =============== State Interfaces
 
@@ -30,7 +35,7 @@ export interface AuthContextProps {
   token: string | null;
   user: Usuario | null;
   status: Status;
-  signUp: () => void;
+  signUp: (registerData: RegisterData) => void;
   signIn: (loginData: LoginData) => void;
   removeError: () => void;
   logOut: () => void;

@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect } from 'react';
 import {
   Text,
   TextInput,
@@ -7,6 +8,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Keyboard,
+  Alert,
 } from 'react-native';
 import { useForm } from '../hooks/useForm';
 import { Background } from '../components/Background';
@@ -14,19 +16,37 @@ import { Logo } from '../components/Logo';
 import { loginStyles } from '../theme/loginTheme';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../navigator/StackNavigator';
+import { AuthContext } from '../context/AuthContext';
 
 interface Props extends StackScreenProps<RootStackParams, 'SignUpScreen'> {}
 
 const SignUpScreen = ({ navigation }: Props) => {
+  const { signUp, errorMessage, removeError } = useContext(AuthContext);
   const { email, password, name, onChange } = useForm({
     name: '',
     email: '',
     password: '',
   });
 
+  useEffect(() => {
+    if (errorMessage.length === 0) {
+      return;
+    }
+    Alert.alert('Login Incorrecto', errorMessage, [
+      {
+        text: 'Ok',
+        onPress: removeError,
+      },
+    ]);
+  }, [errorMessage]);
+
   const onRegister = () => {
-    console.log({ email, password });
     Keyboard.dismiss();
+    signUp({
+      correo: email,
+      nombre: name,
+      password,
+    });
   };
   return (
     <>

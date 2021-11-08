@@ -7,7 +7,11 @@ import {
   AuthState,
 } from '../interfaces/appInterfaces';
 import coffeAPI from '../api/coffeAPI';
-import { LoginResponse, LoginData } from '../interfaces/appInterfaces';
+import {
+  LoginResponse,
+  LoginData,
+  RegisterData,
+} from '../interfaces/appInterfaces';
 
 export const AuthContext = createContext({} as AuthContextProps);
 
@@ -68,11 +72,33 @@ export const AuthProvider = ({ children }: IChildrenAsProps) => {
     } catch (error: any) {
       dispatch({
         type: 'ADD_ERROR',
-        payload: error.response.data.msg || 'Información Incorrecta',
+        payload: error.response.data.errors[0].msg || 'Información Incorrecta',
       });
     }
   };
-  const signUp = () => {};
+  const signUp = async ({ correo, nombre, password }: RegisterData) => {
+    try {
+      const resp = await coffeAPI.post<LoginResponse>('/usuarios', {
+        correo,
+        nombre,
+        password,
+      });
+
+      dispatch({
+        type: 'SIGN_IN_SIGN_UP',
+        payload: {
+          token: resp.data.token,
+          user: resp.data.usuario,
+        },
+      });
+      await AsyncStorage.setItem('token', resp.data.token);
+    } catch (error: any) {
+      dispatch({
+        type: 'ADD_ERROR',
+        payload: error.response.data.errors[0].msg || 'Información Incorrecta',
+      });
+    }
+  };
   const removeError = () => {
     dispatch({
       type: 'REMOVE_ERROR',
