@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { AuthContext } from '../context/AuthContext';
 import HomeScreen from '../screens/HomeScreen';
 import LogInScreen from '../screens/LogInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
@@ -13,6 +14,7 @@ export type RootStackParams = {
 const Stack = createStackNavigator<RootStackParams>();
 
 export const StackNavigator = () => {
+  const { status } = useContext(AuthContext);
   return (
     <Stack.Navigator
       screenOptions={{
@@ -21,9 +23,14 @@ export const StackNavigator = () => {
           backgroundColor: 'white',
         },
       }}>
-      <Stack.Screen name="LogInScreen" component={LogInScreen} />
-      <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      {status === 'authenticated' ? (
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      ) : (
+        <>
+          <Stack.Screen name="LogInScreen" component={LogInScreen} />
+          <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+        </>
+      )}
     </Stack.Navigator>
   );
 };
