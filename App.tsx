@@ -5,6 +5,9 @@ import { IChildrenAsProps } from './src/interfaces/appInterfaces';
 import { AuthProvider } from './src/context/AuthContext';
 import { StackNavigator } from './src/navigator/StackNavigator';
 
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Possible Unhandled Promise Rejection']); // Ignore log notification by message
+
 const AppProvider = ({ children }: IChildrenAsProps) => {
   return <AuthProvider>{children}</AuthProvider>;
 };

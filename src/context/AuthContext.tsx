@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }: IChildrenAsProps) => {
         type: 'NOT_AUTH',
       });
     }
-
+    await AsyncStorage.setItem('token', resp.data.token);
     dispatch({
       type: 'SIGN_IN_SIGN_UP',
       payload: {

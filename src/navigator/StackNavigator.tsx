@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import HomeScreen from '../screens/HomeScreen';
 import LogInScreen from '../screens/LogInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
+import { LoadingScreen } from '../screens/LoadingScreen';
 
 export type RootStackParams = {
   HomeScreen: undefined;
@@ -15,6 +16,10 @@ const Stack = createStackNavigator<RootStackParams>();
 
 export const StackNavigator = () => {
   const { status } = useContext(AuthContext);
+
+  if (status === 'checking') {
+    return <LoadingScreen />;
+  }
   return (
     <Stack.Navigator
       screenOptions={{
