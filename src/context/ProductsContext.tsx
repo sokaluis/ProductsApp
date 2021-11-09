@@ -1,5 +1,11 @@
-import React, { createContext, useState } from 'react';
-import { IChildrenAsProps, Producto } from '../interfaces/appInterfaces';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { createContext, useEffect, useState } from 'react';
+import coffeAPI from '../api/coffeAPI';
+import {
+  IChildrenAsProps,
+  Producto,
+  ProductsResponse,
+} from '../interfaces/appInterfaces';
 
 type ProductsContextProps = {
   products: Producto[];
@@ -20,9 +26,16 @@ export const ProductsContext = createContext({} as ProductsContextProps);
 export const ProductsProvider = ({ children }: IChildrenAsProps) => {
   const [products, setProducts] = useState<Producto[]>([]);
 
-  console.log(setProducts);
+  useEffect(() => {
+    loadProducts();
+  }, []);
 
-  const loadProducts = async () => {};
+  const loadProducts = async () => {
+    const { data } = await coffeAPI.get<ProductsResponse>(
+      '/productos?limite=50',
+    );
+    setProducts([...products, ...data.productos]);
+  };
   const addProduct = async (categoryID: string, productName: string) => {
     console.log(categoryID, productName);
   };
