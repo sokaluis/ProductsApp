@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
 import {
+  Button,
   FlatList,
   RefreshControl,
   StyleSheet,
@@ -11,11 +12,13 @@ import {
 import { ProductsContext } from '../context/ProductsContext';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ProductsStackParams } from '../navigator/ProductsNavigator';
+import { AuthContext } from '../context/AuthContext';
 
 interface Props
   extends StackScreenProps<ProductsStackParams, 'ProductsScreen'> {}
 
 export const ProductsScreen = ({ navigation }: Props) => {
+  const { logOut } = useContext(AuthContext);
   const { products, loadProducts } = useContext(ProductsContext);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -45,6 +48,7 @@ export const ProductsScreen = ({ navigation }: Props) => {
   // TODO: create a pull to refresh
   return (
     <View style={styles.container}>
+      <Button title="Log Out" onPress={logOut} />
       <FlatList
         data={products}
         keyExtractor={product => product._id}

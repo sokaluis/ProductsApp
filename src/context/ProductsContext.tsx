@@ -16,7 +16,7 @@ type ProductsContextProps = {
     productName: string,
     productID: string,
   ) => Promise<void>;
-  deleteProduct: (productID: string) => Promise<Producto>;
+  deleteProduct: (productID: string) => Promise<void>;
   loadProductById: (id: string) => Promise<Producto>;
   uploadImage: (data: any, id: string) => Promise<void>; //TODO: change any type
 };
@@ -59,10 +59,9 @@ export const ProductsProvider = ({ children }: IChildrenAsProps) => {
     });
     setProducts(products.map(prod => (prod._id === productID ? data : prod)));
   };
-  const deleteProduct = async (productID: string): Promise<Producto> => {
-    const { data } = await coffeAPI.delete(`/productos/${productID}`);
-    setProducts(products.filter(({ _id }) => _id !== productID));
-    return data;
+  const deleteProduct = async (productID: string) => {
+    const { data } = await coffeAPI.delete<Producto>(`/productos/${productID}`);
+    setProducts(products.filter(item => item._id !== data._id));
   };
   const loadProductById = async (id: string): Promise<Producto> => {
     const { data } = await coffeAPI.get<Producto>(`/productos/${id}`);
