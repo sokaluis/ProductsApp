@@ -6,10 +6,17 @@ import { AuthProvider } from './src/context/AuthContext';
 import { StackNavigator } from './src/navigator/StackNavigator';
 
 import { LogBox } from 'react-native';
+import { ProductsProvider } from './src/context/ProductsContext';
 LogBox.ignoreLogs(['Possible Unhandled Promise Rejection']); // Ignore log notification by message
 
 const AppProvider = ({ children }: IChildrenAsProps) => {
-  return <AuthProvider>{children}</AuthProvider>;
+  return (
+    <AuthProvider>
+      <ProductsProvider>
+        <>{children}</>
+      </ProductsProvider>
+    </AuthProvider>
+  );
 };
 
 const App = () => {

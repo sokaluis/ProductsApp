@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthContext } from '../context/AuthContext';
-import HomeScreen from '../screens/HomeScreen';
 import LogInScreen from '../screens/LogInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import { LoadingScreen } from '../screens/LoadingScreen';
+import ProductsNavigator from './ProductsNavigator';
 
 export type RootStackParams = {
   HomeScreen: undefined;
@@ -29,7 +29,7 @@ export const StackNavigator = () => {
         },
       }}>
       {status === 'authenticated' ? (
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="HomeScreen" component={ProductsNavigator} />
       ) : (
         <>
           <Stack.Screen name="LogInScreen" component={LogInScreen} />
