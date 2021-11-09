@@ -10,13 +10,13 @@ import {
 type ProductsContextProps = {
   products: Producto[];
   loadProducts: () => Promise<void>;
-  addProduct: (categoryID: string, productName: string) => Promise<void>;
+  addProduct: (categoryID: string, productName: string) => Promise<Producto>;
   updateProduct: (
     categoryID: string,
     productName: string,
     productID: string,
   ) => Promise<void>;
-  deleteProduct: (productID: string) => Promise<void>;
+  deleteProduct: (productID: string) => Promise<Producto>;
   loadProductById: (id: string) => Promise<Producto>;
   uploadImage: (data: any, id: string) => Promise<void>; //TODO: change any type
 };
@@ -34,24 +34,39 @@ export const ProductsProvider = ({ children }: IChildrenAsProps) => {
     const { data } = await coffeAPI.get<ProductsResponse>(
       '/productos?limite=50',
     );
-    setProducts([...products, ...data.productos]);
+    setProducts(data.productos);
   };
-  const addProduct = async (categoryID: string, productName: string) => {
-    console.log(categoryID, productName);
+  const addProduct = async (
+    categoryID: string,
+    productName: string,
+  ): Promise<Producto> => {
+    const { data } = await coffeAPI.post<Producto>('/productos', {
+      nombre: productName,
+      categoria: categoryID,
+    });
+    setProducts([...products, data]);
+
+    return data;
   };
   const updateProduct = async (
     categoryID: string,
     productName: string,
     productID: string,
   ) => {
-    console.log(categoryID, productName, productID);
+    const { data } = await coffeAPI.put<Producto>(`/productos/${productID}`, {
+      nombre: productName,
+      categoria: categoryID,
+    });
+    setProducts(products.map(prod => (prod._id === productID ? data : prod)));
   };
-  const deleteProduct = async (productID: string) => {
-    console.log(productID);
+  const deleteProduct = async (productID: string): Promise<Producto> => {
+    const { data } = await coffeAPI.delete(`/productos/${productID}`);
+    setProducts(products.filter(({ _id }) => _id !== productID));
+    return data;
   };
-  const loadProductById = async (id: string) => {
-    console.log(id);
-    throw new Error('Not Implemented');
+  const loadProductById = async (id: string): Promise<Producto> => {
+    const { data } = await coffeAPI.get<Producto>(`/productos/${id}`);
+    return data;
   };
   //TODO: change any type
   const uploadImage = async (data: any, id: string) => {
