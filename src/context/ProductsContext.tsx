@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { createContext, useEffect, useState } from 'react';
+import { ImagePickerResponse } from 'react-native-image-picker';
 import coffeAPI from '../api/coffeAPI';
 import {
   IChildrenAsProps,
@@ -68,8 +69,24 @@ export const ProductsProvider = ({ children }: IChildrenAsProps) => {
     return data;
   };
   //TODO: change any type
-  const uploadImage = async (data: any, id: string) => {
-    console.log(id, data);
+  const uploadImage = async (image: ImagePickerResponse, id: string) => {
+    if (image.assets?.length === 0) {
+      return;
+    }
+    const fileToUpload = {
+      uri: image.assets![0].uri,
+      type: image.assets![0].type,
+      name: image.assets![0].fileName,
+    };
+
+    const formData = new FormData();
+    formData.append('archivo', fileToUpload);
+
+    try {
+      await coffeAPI.put<Producto>(`/uploads/productos/${id}`, formData);
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <ProductsContext.Provider
