@@ -1,4 +1,4 @@
-package com.productsapp;
+package dev.lazocar.productsapp;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;

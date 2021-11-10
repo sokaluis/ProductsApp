@@ -1,4 +1,4 @@
-package com.productsapp;
+package dev.lazocar.productsapp;
 // react-native-splash-screen >= 0.3.1
 // import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import android.app.Application;
@@ -63,7 +63,7 @@ public class MainApplication extends Application implements ReactApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("com.productsapp.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("dev.lazocar.productsapp.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);

@@ -501,7 +501,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.lazocar.ProductsApp;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.lazocar.products;
 				PRODUCT_NAME = ProductsApp;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -528,7 +528,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.lazocar.ProductsApp;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.lazocar.products;
 				PRODUCT_NAME = ProductsApp;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
